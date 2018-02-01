@@ -59,7 +59,7 @@ app.post("/getData",(req, res) => {
           console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
           console.log('body:', body); // Print the HTML for the Google homepage.
           res.send({
-            data : json.parse(body),
+            data : JSON.parse(body),
             image_name : fileName
           });
       });
