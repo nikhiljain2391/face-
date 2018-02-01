@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>HDFC Life</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" href="images/favicon.ico">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	function openBrowse(){
+		localStorage.removeItem("image_url");
+		localStorage.removeItem("age");
+		localStorage.removeItem("gender");
+
+		document.getElementById('capture').click();
+	}
+	function handleChange(event){
+		var reader = new FileReader();
+    if(event.target.files && event.target.files[0]){
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+        //this.fileChange(event);
+        reader.onload = (event) => { // called once readAsDataURL is completed
+					$(".loader-container").show()
+          var url = {
+						base64 : event.target.result
+					}
+					localStorage.setItem("image_url",event.target.result)
+          getImageDetails(url);
+          // console.log(url);
+        }
+    }else{
+
+    }
+	}
+	function getImageDetails(url){
+
+		axios.post("http://52.66.44.56:3000/getData", url).then(
+				response => {
+						let res = JSON.parse(response.data);
+						if(JSON.stringify(res).indexOf("413 Request Entity Too Large") > -1){
+								//dispatch({type: "LARGE_FILE"})
+								$(".loader-container").hide()
+						}else{
+								if(res.faces){
+										if(res.faces.length === 0){
+												dispatch({type: "NO_FACE"})
+										}else{
+												let age = res.faces[0].attributes.age.value;
+												let gender = res.faces[0].attributes.gender.value;
+												let image_name = res.image_name;
+												localStorage.setItem("age",age)
+												localStorage.setItem("gender",gender)
+												window.open("second.html","_self")
+												// let soap_first= '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://TEBT_QuoteGeneration/QuoteGeneration_TP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><ns0:Body><ns1:generatequote><generatequoteReq><head><source>OCP_ONLINE</source><userid>kuliza_ocp_001</userid><txnid>FIN-81989</txnid></head><body><quotedtls><jnk>N</jnk><sumAssured>10000000</sumAssured><term>40</term><ppt>40</ppt><freq>FREQ_1</freq><touchpoint>OCP</touchpoint><product>C2P3DPER</product><option>3D Life</option><tobstatus>N</tobstatus><lifeassured>'
+                        //
+												// if(gender=="Female"){
+												// 	var gender_pre = "GEN_F"
+												// }else{
+												// 	var gender_pre = "GEN_M"
+												// }
+                        //
+												// var dob = "01/01/"+(2018-age)
+                        //
+												// let soap_mid='<dob>'+dob+'</dob><gender>'+gender_pre+'</gender>'
+                        //
+												// let soal_last = '</lifeassured><pptOption>REGULAR</pptOption></quotedtls><outputFmt>JSON</outputFmt><agentcd>00488538</agentcd><generateonlyflag>Y</generateonlyflag></body></generatequoteReq></ns1:generatequote></ns0:Body></SOAP-ENV:Envelope>'
+
+
+												// $.post( "http://124.30.32.37:9082/TEBT_QuoteGenerationWeb/sca/QuoteGeneration_ThirdPartyExport",soap_first+soap_mid+soal_last, function( data ) {
+												//   console.log(soap_first+soap_mid+soal_last)
+												// });
+												// axios.post("http://124.30.32.37:9082/TEBT_QuoteGenerationWeb/sca/QuoteGeneration_ThirdPartyExport", soap_first+soap_mid+soal_last,{headers: {'Access-Control-Allow-Origin': '*'}}).then(
+												// 		response => {
+												// 				let res = JSON.parse(response.data);
+												// 				console.log(response,res)
+												// 			}).catch(err => {
+												// 					console.log(err);
+												// 					$(".loader-container").hide()
+												// 					//dispatch({type: "NO_DATAS"});
+												// 			})
+										}
+								}else{
+										console.log("No Face found");
+										$(".loader-container").hide()
+										//dispatch({type: "TECH_ERROR"});
+								}
+						}
+				}
+		).catch(err => {
+				console.log(err);
+				$(".loader-container").hide()
+				//dispatch({type: "NO_DATAS"});
+		})
+	}
+</script>
+</head>
+
+<body>
+	<header>
+		<div class="container">
+			<div class="text-left">
+				<a href="#"><img src="images/logo.svg" alt="logo" /></a>
+			</div>
+		</div>
+	</header>
+	<section class="banno">
+		<div class="container">
+			<img src="images/ban1.png" class="img-responsive text-center" alt="banner"/>
+			<a href="#" class="cambtn">
+				<img src="images/cambtn.svg" alt="camera" onclick="openBrowse()">
+				<input type="file" accept="image/*" id="capture" capture="camera" style="display:none" onChange="handleChange(event)"/>
+			</a>
+			<p class="despiko text-center" style="margin-top:32px">Ensure your face is well lit, remove glasses, and push hair away from face.</p>
+			<h1><strong>TAKE A SELFIE</strong> <span class="thin">& GET AN INSURANCE QUOTE</span></h1>
+			<p class="despiko text-center">Your selfie will be used to to provide an estimate for life insurance based on an estimate of your age, gender, and BMI. By clicking “Submit a Selfie” you confirm that you are 20 years of age or older and agree to the Privacy Policy.</p>
+			<a class="calltoact"  onclick="openBrowse()">Get My Quote <img src="images/right-arrow.svg" width="16" alt="" class="arrow" /></a>
+		</div>
+	</section>
+	<div class="loader-container">
+		<div class="loader">
+			<img src="images/loader.gif" alt="loader" class="img-responsive">
+		</div>
+	</div>
+</body>
+</html>

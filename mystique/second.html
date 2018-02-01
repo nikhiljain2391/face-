@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>HDFC Life</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" href="images/favicon.ico">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		if(localStorage.getItem("age")){
+			$("#age").html(localStorage.getItem("age"));
+			$("#gender").html(localStorage.getItem("gender"));
+			$("#gender_dd").val(localStorage.getItem("gender"));
+			$("#image").attr("src",localStorage.getItem("image_url"));
+		}
+	});
+</script>
+
+
+</head>
+
+<body class="second">
+	<header>
+		<div class="container">
+			<div class="text-left">
+				<a href="#"><img src="images/logo.svg" alt="logo" /></a>
+			</div>
+		</div>
+	</header>
+	<section class="banno">
+		<div class="container">
+			<h1><strong>Hurray!</strong><br><span class="thin" style="font-size: 17px;">Based on your selfie, term life insurance may only cost you:</span></h1>
+			<div class="afterlife">
+				<div class="innerconena">
+					<div class="dataman">
+						<p class="price stylo"><span class="currency">₹</span><strong>1100 /Month</strong></p>
+						<p class="price stylo" style="font-size: 10px;margin-bottom:5px !important;">for 1 crore 25 years term policy</p>
+						<p class="age stylo">Age- <strong id="age">28</strong></p>
+						<p class="age stylo">Gender- <strong id="gender">Male</strong></p>
+					</div>
+					<div class="userdp">
+						<img src="images/user.png" class="img-circle" id="image" alt="user" />
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+	<section class="performer">
+		<div class="container">
+			<h4 class="padbtm20">How did we do?</h4>
+			<div class="col-xs-6 nopadleft">
+				<span class="title">GENDER</span>
+				<select id="gender_dd">
+					<option>Select Gender</option>
+					<option>Male</option>
+					<option>Female</option>
+				</select>
+			</div>
+			<div class="col-xs-6 nomarright">
+				<span class="title">DOB</span>
+				<input type="text" placeholder="mm-dd-yy">
+			</div>
+			<span class="partition"></span>
+			<div class="col-xs-6 nopadleft">
+				<span class="title">NAME</span>
+				<input type="text" >
+			</div>
+			<div class="col-xs-6 nomarright">
+				<span class="title">MOBILE</span>
+				<input type="text" >
+			</div>
+			<span class="partition"></span>
+			<a class="calltoact2" href="index.html">NEXT <img src="images/right-arrow-wht.svg" width="16" alt="" class="arrow" /></a>
+		</div>
+	</section>
+</body>
+</html>

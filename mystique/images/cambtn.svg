@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="78" height="77" viewBox="0 0 78 77">
+    <defs>
+        <linearGradient id="c" x1="50%" x2="-7.959%" y1="59.878%" y2="8.44%">
+            <stop offset="0%" stop-color="#00DCFF"/>
+            <stop offset="100%" stop-color="#00A6FF"/>
+        </linearGradient>
+        <circle id="b" cx="30" cy="29.565" r="29.056"/>
+        <filter id="a" width="155.1%" height="155.1%" x="-27.5%" y="-24.1%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.839152849 0 0 0 0 0.839152849 0 0 0 0 0.839152849 0 0 0 0.436452672 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(9 7)">
+            <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+            <use fill="url(#c)" xlink:href="#b"/>
+        </g>
+        <g fill="#FFF" fill-rule="nonzero" transform="translate(22 24)">
+            <path d="M.779 7.795v13.59c0 2.075 1.78 3.76 3.971 3.76H29.35c2.192 0 3.971-1.685 3.971-3.76V7.796c0-1.974-1.693-3.577-3.778-3.577h-5.287l-.126-.522C23.618 1.603 21.672.145 19.401.145h-4.709c-2.265 0-4.21 1.458-4.728 3.551l-.127.522h-5.28C2.473 4.218.78 5.828.78 7.795zm9.71-2.037a.801.801 0 0 0 .79-.597l.272-1.119c.345-1.39 1.633-2.357 3.141-2.357h4.709c1.507 0 2.796.968 3.14 2.357l.273 1.119a.808.808 0 0 0 .79.597h5.931c1.189 0 2.152.912 2.152 2.037v13.59c0 1.226-1.05 2.22-2.345 2.22H4.75c-1.295 0-2.344-.994-2.344-2.22V7.796c0-1.125.963-2.037 2.152-2.037h5.93z"/>
+            <ellipse cx="6.284" cy="9.046" rx="1.089" ry="1.031"/>
+            <path d="M17.05 21.19c3.765 0 6.833-2.904 6.833-6.468s-3.068-6.468-6.833-6.468c-3.766 0-6.834 2.898-6.834 6.468s3.068 6.469 6.834 6.469zm0-11.396c2.869 0 5.206 2.213 5.206 4.928 0 2.716-2.337 4.929-5.206 4.929-2.87 0-5.207-2.213-5.207-4.929 0-2.715 2.338-4.928 5.207-4.928z"/>
+        </g>
+    </g>
+</svg>
