@@ -103,12 +103,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aa45ff', end
 
 .loader{
   position: absolute;
+  left: 50%;
+  margin-left: -150px;
   top: 50%;
-  margin-top: -145px;
-  left: 18%;
-  margin-left: -31px;
+  margin-top: -87px;
   width: 302px;
-  height: 60px;
+  height: 174px;
   display: block;
 }
 
