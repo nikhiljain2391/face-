@@ -39,7 +39,7 @@
 
 		axios.post("http://52.66.44.56:3000/getData", url).then(
 				response => {
-						let res = JSON.parse(response.data);
+						let res = response.data;
 						if(JSON.stringify(res).indexOf("413 Request Entity Too Large") > -1){
 								//dispatch({type: "LARGE_FILE"})
 								$(".loader-container").hide()
