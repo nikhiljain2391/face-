@@ -39,17 +39,18 @@
 
 		axios.post("http://52.66.44.56:3000/getData", url).then(
 				response => {
-						let res = response.data;
+						let res = response.data
+						console.log(res)
 						if(JSON.stringify(res).indexOf("413 Request Entity Too Large") > -1){
 								//dispatch({type: "LARGE_FILE"})
 								$(".loader-container").hide()
 						}else{
-								if(res.faces){
-										if(res.faces.length === 0){
+								if(res.data.faces){
+										if(res.data.faces.length === 0){
 												dispatch({type: "NO_FACE"})
 										}else{
-												let age = res.faces[0].attributes.age.value;
-												let gender = res.faces[0].attributes.gender.value;
+												let age = res.data.faces[0].attributes.age.value;
+												let gender = res.data.faces[0].attributes.gender.value;
 												let image_name = res.image_name;
 												localStorage.setItem("age",age)
 												localStorage.setItem("gender",gender)
