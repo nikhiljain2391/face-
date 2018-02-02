@@ -51,7 +51,10 @@
             canvas.width = tempW;
             canvas.height = tempH;
             var ctx = canvas.getContext("2d");
-						
+						var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+						if(iOS==true){
+							ctx.setTransform(0, 1, -1, 0, width, 0);
+						}
             ctx.drawImage(this, 0, 0, tempW, tempH);
             var dataURL = canvas.toDataURL("image/jpeg");
 						$(".loader-container").show()
