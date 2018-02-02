@@ -81,7 +81,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aa45ff', end
 .dataman { text-align: left; float: left; margin-left: 25%}
 .userdp { float: left; margin-left: -60px; margin-top: -92px; clear: both}
 .userdp img { width: 100px; height: 100px;}
-.price { font-size: 22px;font-weight: bold; margin-bottom: 16px;}
+.price { font-size: 22px;font-weight: bold;}
 .currency { font-size:18px; margin-top: -12px;}
 .age { font-size:16px;}
 .performer { width:80%; margin: auto; margin-top: 20px;}
