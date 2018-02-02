@@ -30,32 +30,45 @@
 					var tempImg = new Image();
           tempImg.src = reader.result;
           tempImg.onload = function() {
-         		var MAX_WIDTH = 1024;
-            var MAX_HEIGHT = 768;
+         		var MAX_WIDTH = 700;
+            var MAX_HEIGHT = 600;
             var tempW = tempImg.width;
             var tempH = tempImg.height;
-            if (tempW > tempH) {
+						var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+						if(iOS==true){
+							var tempW = tempImg.height;
+	            var tempH = tempImg.width;
+						}
+
+						if (tempW/MAX_WIDTH > tempH/MAX_HEIGHT) {
                 if (tempW > MAX_WIDTH) {
-                   tempH *= MAX_WIDTH / tempW;
-                   tempW = MAX_WIDTH;
+                    tempH *= MAX_WIDTH / tempW;
+                    tempW = MAX_WIDTH;
                 }
             } else {
                 if (tempH > MAX_HEIGHT) {
-                   tempW *= MAX_HEIGHT / tempH;
-                   tempH = MAX_HEIGHT;
+                    tempW *= MAX_HEIGHT / tempH;
+                    tempH = MAX_HEIGHT;
                 }
             }
 
 
             var canvas = document.createElement('canvas');
+
             canvas.width = tempW;
             canvas.height = tempH;
             var ctx = canvas.getContext("2d");
-						// var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
-						// if(iOS==true){
-						// 	ctx.setTransform(0, 1, -1, 0, width, 0);
-						// }
-            ctx.drawImage(this, 0, 0, tempW, tempH);
+						ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+						if(iOS==true){
+							canvas.width = tempH;
+	            canvas.height = tempW;
+							ctx.setTransform(0, 1, -1, 0, tempH, 0);
+							ctx.drawImage(this, 0, 0, tempW, tempH);
+						}else{
+							ctx.drawImage(this, 0, 0, tempW, tempH);
+						}
+						ctx.setTransform(1, 0, 0, 1, 0, 0);
             var dataURL = canvas.toDataURL("image/jpeg");
 						$(".loader-container").show()
 	          var url = {
