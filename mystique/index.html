@@ -50,28 +50,36 @@
         var width;
         var height;
         var binaryReader = new FileReader();
-        binaryReader.onloadend=function(d) {
+        binaryReader.onloadend=function(event) {
             var exif, transform = "none";
-            exif=EXIF.readFromBinaryFile(createBinaryFile(event.target.result));
-            if(exif.Orientation === 8) {
-                width = img.height;
-                height = img.width;
-                transform = "left";
-            } else if(exif.Orientation === 6) {
-                width = img.height;
-                height = img.width;
-                transform = "right";
-            } else if(exif.Orientation === 1) {
-                width = img.width;
-                height = img.height;
-            } else if(exif.Orientation === 3) {
-                width = img.width;
-                height = img.height;
-                transform = "flip";
-            } else {
-                width = img.width;
-                height = img.height;
-            }
+            // exif=EXIF.readFromBinaryFile(createBinaryFile(event.target.result));
+						// console.log(EXIF.readFromBinaryFile(createBinaryFile(event.target.result)))
+            // if(exif.Orientation === 8) {
+            //     width = img.height;
+            //     height = img.width;
+            //     transform = "left";
+            // } else if(exif.Orientation === 6) {
+            //     width = img.height;
+            //     height = img.width;
+            //     transform = "right";
+            // } else if(exif.Orientation === 1) {
+            //     width = img.width;
+            //     height = img.height;
+            // } else if(exif.Orientation === 3) {
+            //     width = img.width;
+            //     height = img.height;
+            //     transform = "flip";
+            // } else {
+            //     width = img.width;
+            //     height = img.height;
+            // }
+
+						var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+						if(iOS==true){
+							width = img.height;
+              height = img.width;
+              transform = "right";
+						}
             var MAX_WIDTH = 700;
             var MAX_HEIGHT = 600;
             if (width/MAX_WIDTH > height/MAX_HEIGHT) {
