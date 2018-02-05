@@ -105,34 +105,33 @@
 												let image_name = res.image_name;
 												localStorage.setItem("age",age)
 												localStorage.setItem("gender",gender)
-												window.open("second.html","_self")
-												// let soap_first= '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://TEBT_QuoteGeneration/QuoteGeneration_TP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><ns0:Body><ns1:generatequote><generatequoteReq><head><source>OCP_ONLINE</source><userid>kuliza_ocp_001</userid><txnid>FIN-81989</txnid></head><body><quotedtls><jnk>N</jnk><sumAssured>10000000</sumAssured><term>40</term><ppt>40</ppt><freq>FREQ_1</freq><touchpoint>OCP</touchpoint><product>C2P3DPER</product><option>3D Life</option><tobstatus>N</tobstatus><lifeassured>'
-                        //
-												// if(gender=="Female"){
-												// 	var gender_pre = "GEN_F"
-												// }else{
-												// 	var gender_pre = "GEN_M"
-												// }
-                        //
-												// var dob = "01/01/"+(2018-age)
-                        //
-												// let soap_mid='<dob>'+dob+'</dob><gender>'+gender_pre+'</gender>'
-                        //
-												// let soal_last = '</lifeassured><pptOption>REGULAR</pptOption></quotedtls><outputFmt>JSON</outputFmt><agentcd>00488538</agentcd><generateonlyflag>Y</generateonlyflag></body></generatequoteReq></ns1:generatequote></ns0:Body></SOAP-ENV:Envelope>'
+												//window.open("second.html","_self")
+												let soap_first= '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://TEBT_QuoteGeneration/QuoteGeneration_TP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><ns0:Body><ns1:generatequote><generatequoteReq><head><source>OCP_ONLINE</source><userid>kuliza_ocp_001</userid><txnid>FIN-81989</txnid></head><body><quotedtls><jnk>N</jnk><sumAssured>10000000</sumAssured><term>40</term><ppt>40</ppt><freq>FREQ_1</freq><touchpoint>OCP</touchpoint><product>C2P3DPER</product><option>3D Life</option><tobstatus>N</tobstatus><lifeassured>'
 
+												if(gender=="Female"){
+													var gender_pre = "GEN_F"
+												}else{
+													var gender_pre = "GEN_M"
+												}
+
+												var dob = "01/01/"+(2018-age)
+
+												let soap_mid='<dob>'+dob+'</dob><gender>'+gender_pre+'</gender>'
+
+												let soal_last = '</lifeassured><pptOption>REGULAR</pptOption></quotedtls><outputFmt>JSON</outputFmt><agentcd>00488538</agentcd><generateonlyflag>Y</generateonlyflag></body></generatequoteReq></ns1:generatequote></ns0:Body></SOAP-ENV:Envelope>'
 
 												// $.post( "http://124.30.32.37:9082/TEBT_QuoteGenerationWeb/sca/QuoteGeneration_ThirdPartyExport",soap_first+soap_mid+soal_last, function( data ) {
 												//   console.log(soap_first+soap_mid+soal_last)
 												// });
-												// axios.post("http://124.30.32.37:9082/TEBT_QuoteGenerationWeb/sca/QuoteGeneration_ThirdPartyExport", soap_first+soap_mid+soal_last,{headers: {'Access-Control-Allow-Origin': '*'}}).then(
-												// 		response => {
-												// 				let res = JSON.parse(response.data);
-												// 				console.log(response,res)
-												// 			}).catch(err => {
-												// 					console.log(err);
-												// 					$(".loader-container").hide()
-												// 					//dispatch({type: "NO_DATAS"});
-												// 			})
+												axios.post("http://124.30.32.37:9082/TEBT_QuoteGenerationWeb/sca/QuoteGeneration_ThirdPartyExport", soap_first+soap_mid+soal_last,{headers: {'Access-Control-Allow-Origin': '*'}}).then(
+														response => {
+																let res = JSON.parse(response.data);
+																console.log(response,res)
+															}).catch(err => {
+																	console.log(err);
+																	$(".loader-container").hide()
+																	//dispatch({type: "NO_DATAS"});
+															})
 										}
 								}else{
 										console.log("No Face found");
