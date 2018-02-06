@@ -9,6 +9,8 @@ const imagemin = require('imagemin');
 const imageminJpegtran = require('imagemin-jpegtran');
 var cors = require('cors');
 var app = express();
+
+var parseString = require('xml2js').parseString;
 // use it before all route definitions
 app.use(cors({origin: '*'}));
 app.use(bodyParser.json({limit: '50mb'}));
@@ -16,6 +18,27 @@ app.use(bodyParser.json({limit: '50mb'}));
 
 app.get("/",(req, res) => {
     res.send("HI");
+});
+
+
+app.post("/getPremium",(req, res) => {
+    let data = req.body;
+    request.post({
+      url:     'http://124.30.32.37:9082/TEBT_QuoteGenerationWeb/sca/QuoteGeneration_ThirdPartyExport',
+      body: data.data,
+      headers: {'Content-Type': 'text/xml'}
+      // json:    {apikey:'puGfjvZVbpMvIuHAadbqgcrLLzB2',unique_id:'1120094'},
+    }, function(error, response, body){
+      if(error){
+        throw err
+      }
+      parseString(body, function (error, result) {
+        if(error){
+          throw err
+        }
+        res.send(JSON.parse(result["soapenv:Envelope"]["soapenv:Body"][0]["out2:generatequoteResponse"][0]["generatequoteRes"][0]["body"][0]["quotedtls"][0]));
+      });
+    });
 });
 
 app.post("/getData",(req, res) => {
@@ -68,5 +91,5 @@ app.post("/getData",(req, res) => {
 
 
 var server = app.listen(3000, function(){
-    console.log("The server started on port 8000 !!!!!!");
+    console.log("The server started on port 3000 !!!!!!");
 });
