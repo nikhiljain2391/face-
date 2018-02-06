@@ -63,9 +63,9 @@ header { width: 100%; padding: 14px; box-shadow: 0 0 10px rgba(0,0,0,0.1); backg
 .banno { text-align: center; color: #fff; padding-top: 50px;}
 .banno .img-responsive { margin: auto}
 .cambtn { margin-top: -40px; display: inline-block; position:absolute;  left: 0;  right: 0; }
-.banno h1 { font-size:18px; padding: 12px; line-height: 24px;margin-top: 40px; text-transform: uppercase; margin-bottom: 1px;}
+.banno h1 { font-size:18px; padding: 12px; line-height: 24px;margin-top: 20px; text-transform: uppercase; margin-bottom: 1px;}
 .container { padding: 0;}
-.despiko { color:#fff; font-size: 11px; padding: 12px 28px;}
+.despiko { color:#fff; font-size: 11px; padding: 12px 75px;}
 .calltoact {background: #fff; border-radius: 4px; width: 80%; display: block; text-decoration: none; margin: auto; color: #ed1c24; padding: 8px; margin-bottom: 20px; margin-top: 14px;}
 .arrow { margin-left: 20px;}
 
