@@ -15,6 +15,8 @@
 			$("#gender").html(localStorage.getItem("gender"));
 			$("#gender_dd").val(localStorage.getItem("gender"));
 			$("#image").attr("src",localStorage.getItem("image_url"));
+			$("#premium").html(localStorage.getItem("premium"));
+			$("#term").html(localStorage.getItem("term"));
 		}
 	});
 </script>
@@ -36,8 +38,8 @@
 			<div class="afterlife">
 				<div class="innerconena">
 					<div class="dataman">
-						<p class="price stylo"><span class="currency">₹</span><strong>1100 /Month</strong></p>
-						<p class="price stylo" style="font-size: 10px;margin-bottom:5px !important;">for 1 crore 25 years term policy</p>
+						<p class="price stylo"><span class="currency">₹</span><strong><span id="premium">1100</span>/Month</strong></p>
+						<p class="price stylo" style="font-size: 9px;margin-bottom:5px !important;">for 1 crore <span id="term">25</span> years term policy</p>
 						<p class="age stylo">Age- <strong id="age">28</strong></p>
 						<p class="age stylo">Gender- <strong id="gender">Male</strong></p>
 					</div>

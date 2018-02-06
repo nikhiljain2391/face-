@@ -14,7 +14,8 @@
 		localStorage.removeItem("image_url");
 		localStorage.removeItem("age");
 		localStorage.removeItem("gender");
-
+		localStorage.removeItem("premium");
+		localStorage.removeItem("term");
 		document.getElementById('capture').click();
 	}
 
@@ -88,25 +89,31 @@
 
 	function getImageDetails(url){
 
-		axios.post("http://52.66.44.56:3000/getData", url).then(
+		axios.post("http://localhost:3000/getData", url).then(
 				response => {
 						let res = response.data
 						console.log(res)
 						if(JSON.stringify(res).indexOf("413 Request Entity Too Large") > -1){
 								//dispatch({type: "LARGE_FILE"})
 								$(".loader-container").hide()
+								$("#banner").hide()
+								$("#error").show()
 						}else{
 								if(res.data.faces){
 										if(res.data.faces.length === 0){
-												dispatch({type: "NO_FACE"})
+											$(".loader-container").hide()
+											$("#banner").hide()
+											$("#error").show()
 										}else{
 												let age = res.data.faces[0].attributes.age.value;
 												let gender = res.data.faces[0].attributes.gender.value;
 												let image_name = res.image_name;
+												let term = 65 - parseInt(age);
+												localStorage.setItem("term",term);
 												localStorage.setItem("age",age)
 												localStorage.setItem("gender",gender)
 												//window.open("second.html","_self")
-												let soap_first= '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://TEBT_QuoteGeneration/QuoteGeneration_TP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><ns0:Body><ns1:generatequote><generatequoteReq><head><source>OCP_ONLINE</source><userid>kuliza_ocp_001</userid><txnid>FIN-81989</txnid></head><body><quotedtls><jnk>N</jnk><sumAssured>10000000</sumAssured><term>40</term><ppt>40</ppt><freq>FREQ_1</freq><touchpoint>OCP</touchpoint><product>C2P3DPER</product><option>3D Life</option><tobstatus>N</tobstatus><lifeassured>'
+												let soap_first= '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://TEBT_QuoteGeneration/QuoteGeneration_TP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><ns0:Body><ns1:generatequote><generatequoteReq><head><source>OCP_ONLINE</source><userid>kuliza_ocp_001</userid><txnid>FIN-81989</txnid></head><body><quotedtls><jnk>N</jnk><sumAssured>10000000</sumAssured><term>'+term+'</term><ppt>'+term+'</ppt><freq>FREQ_4</freq><touchpoint>OCP</touchpoint><product>C2P3DPER</product><option>3D Life</option><tobstatus>N</tobstatus><lifeassured>'
 
 												if(gender=="Female"){
 													var gender_pre = "GEN_F"
@@ -119,23 +126,47 @@
 												let soap_mid='<dob>'+dob+'</dob><gender>'+gender_pre+'</gender>'
 
 												let soal_last = '</lifeassured><pptOption>REGULAR</pptOption></quotedtls><outputFmt>JSON</outputFmt><agentcd>00488538</agentcd><generateonlyflag>Y</generateonlyflag></body></generatequoteReq></ns1:generatequote></ns0:Body></SOAP-ENV:Envelope>'
-
+												// var settings = {
+												//   "async": true,
+												//   "crossDomain": true,
+												//   "url": "http://localhost:3000/getPremium",
+												//   "method": "POST"
+												// 	"data" : soap_first+soap_mid+soal_last
+												// }
 												// $.post( "http://124.30.32.37:9082/TEBT_QuoteGenerationWeb/sca/QuoteGeneration_ThirdPartyExport",soap_first+soap_mid+soal_last, function( data ) {
 												//   console.log(soap_first+soap_mid+soal_last)
 												// });
-												axios.post("http://124.30.32.37:9082/TEBT_QuoteGenerationWeb/sca/QuoteGeneration_ThirdPartyExport", soap_first+soap_mid+soal_last,{headers: {'Access-Control-Allow-Origin': '*'}}).then(
+												// $.ajax(settings).done(function (response) {
+												//   console.log(response);
+												// });
+												let reqData = {
+													"data" : soap_first+soap_mid+soal_last
+												}
+												console.log(reqData)
+												axios.post("http://localhost:3000/getPremium", reqData).then(
 														response => {
-																let res = JSON.parse(response.data);
-																console.log(response,res)
+																//let res = JSON.parse(response);
+																if(response.data.totPremium==undefined){
+																	$(".loader-container").hide()
+																	$("#banner").hide()
+																	$("#error").show()
+																}else{
+																		localStorage.setItem("premium",response.data.totPremium)
+																		window.open("second.html","_self")
+																}
 															}).catch(err => {
 																	console.log(err);
 																	$(".loader-container").hide()
+																	$("#banner").hide()
+																	$("#error").show()
 																	//dispatch({type: "NO_DATAS"});
 															})
 										}
 								}else{
 										console.log("No Face found");
 										$(".loader-container").hide()
+										$("#banner").hide()
+										$("#error").show()
 										//dispatch({type: "TECH_ERROR"});
 								}
 						}
@@ -143,6 +174,8 @@
 		).catch(err => {
 				console.log(err);
 				$(".loader-container").hide()
+				$("#banner").hide()
+				$("#error").show()
 				//dispatch({type: "NO_DATAS"});
 		})
 	}
@@ -159,14 +192,16 @@
 	</header>
 	<section class="banno">
 		<div class="container">
-			<img src="images/ban1.png" class="img-responsive text-center" alt="banner"/>
+			<img src="images/ban1.png" id="banner" class="img-responsive text-center" alt="banner"/>
+			<img src="images/error.png" id="error" style="display:none" class="img-responsive text-center" alt="banner"/>
 			<a href="#" class="cambtn">
 				<img src="images/cambtn.svg" alt="camera" onclick="openBrowse()">
 				<input type="file" accept="image/*" id="capture" capture="camera" style="display:none" onChange="handleChange(event)"/>
 			</a>
-			<p class="despiko text-center" style="margin-top:32px">Ensure your face is well lit, remove glasses, and push hair away from face.</p>
-			<h1><strong>TAKE A SELFIE</strong> <span class="thin">& GET AN INSURANCE QUOTE</span></h1>
-			<p class="despiko text-center">Your selfie will be used to to provide an estimate for life insurance based on an estimate of your age, gender, and BMI. By clicking “Submit a Selfie” you confirm that you are 20 years of age or older and agree to the Privacy Policy.</p>
+			<p class="despiko text-center" style="margin-top:32px">Before you say cheese, make sure Your face is well-lit. Hair strands are pushed to the back.
+You are not wearing glasses.</p>
+			<h1><strong>UPLOAD A SELFIE</strong> <span class="thin">& GET AN INSURANCE QUOTE</span></h1>
+			<p class="despiko text-center">A look at this selfie after years and you would know that you did the right thing! So, what are you waiting for? <strong>Carpe Diem!</strong></p>
 			<a class="calltoact"  onclick="openBrowse()">Get My Quote <img src="images/right-arrow.svg" width="16" alt="" class="arrow" /></a>
 		</div>
 	</section>
