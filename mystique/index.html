@@ -89,7 +89,7 @@
 
 	function getImageDetails(url){
 
-		axios.post("http://localhost:3000/getData", url).then(
+		axios.post("http://52.66.44.56:3000/getData", url).then(
 				response => {
 						let res = response.data
 						console.log(res)
@@ -143,7 +143,7 @@
 													"data" : soap_first+soap_mid+soal_last
 												}
 												console.log(reqData)
-												axios.post("http://localhost:3000/getPremium", reqData).then(
+												axios.post("http://52.66.44.56:3000/getPremium", reqData).then(
 														response => {
 																//let res = JSON.parse(response);
 																if(response.data.totPremium==undefined){
