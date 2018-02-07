@@ -86,7 +86,7 @@
 
 
 	function getImageDetails(url){
-		axios.post("http://192.168.253.175:3000/getData", url).then(
+		axios.post("http://52.66.44.56:3000/getData", url).then(
 				response => {
 						let res = response.data
 						if(JSON.stringify(res).indexOf("413 Request Entity Too Large") > -1){
@@ -128,7 +128,7 @@
 												// var settings = {
 												//   "async": true,
 												//   "crossDomain": true,
-												//   "url": "http://192.168.253.175:3000/getPremium",
+												//   "url": "http://52.66.44.56:3000/getPremium",
 												//   "method": "POST"
 												// 	"data" : soap_first+soap_mid+soal_last
 												// }
@@ -141,7 +141,7 @@
 												let reqData = {
 													"data" : soap_first+soap_mid+soal_last
 												}
-												axios.post("http://192.168.253.175:3000/getPremium", reqData).then(
+												axios.post("http://52.66.44.56:3000/getPremium", reqData).then(
 														response => {
 																//let res = JSON.parse(response);
 																if(response.data.totPremium==undefined){
