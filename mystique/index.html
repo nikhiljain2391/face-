@@ -31,8 +31,8 @@
 					var tempImg = new Image();
           tempImg.src = reader.result;
           tempImg.onload = function() {
-         		var MAX_WIDTH = 700;
-            var MAX_HEIGHT = 600;
+         		var MAX_WIDTH = 640;
+            var MAX_HEIGHT = 960;
             var tempW = tempImg.width;
             var tempH = tempImg.height;
 						var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
@@ -59,13 +59,11 @@
             canvas.width = tempW;
             canvas.height = tempH;
             var ctx = canvas.getContext("2d");
-						ctx.fillStyle = 'white';
+						ctx.fillStyle = 'black';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 						if(iOS==true){
-							canvas.width = tempH;
-	            canvas.height = tempW;
-							ctx.setTransform(0, 1, -1, 0, tempH, 0);
-							ctx.drawImage(this, 0, 0, tempW, tempH);
+							ctx.setTransform(0, 1, -1, 0, tempW, 0);
+							ctx.drawImage(this, 0, 0, tempH, tempW);
 						}else{
 							ctx.drawImage(this, 0, 0, tempW, tempH);
 						}
@@ -88,11 +86,9 @@
 
 
 	function getImageDetails(url){
-
-		axios.post("http://52.66.44.56:3000/getData", url).then(
+		axios.post("http://192.168.253.175:3000/getData", url).then(
 				response => {
 						let res = response.data
-						console.log(res)
 						if(JSON.stringify(res).indexOf("413 Request Entity Too Large") > -1){
 								//dispatch({type: "LARGE_FILE"})
 								$(".loader-container").hide()
@@ -109,6 +105,9 @@
 												let gender = res.data.faces[0].attributes.gender.value;
 												let image_name = res.image_name;
 												let term = 65 - parseInt(age);
+												if(term>40){
+													term=40
+												}
 												localStorage.setItem("term",term);
 												localStorage.setItem("age",age)
 												localStorage.setItem("gender",gender)
@@ -129,7 +128,7 @@
 												// var settings = {
 												//   "async": true,
 												//   "crossDomain": true,
-												//   "url": "http://localhost:3000/getPremium",
+												//   "url": "http://192.168.253.175:3000/getPremium",
 												//   "method": "POST"
 												// 	"data" : soap_first+soap_mid+soal_last
 												// }
@@ -142,8 +141,7 @@
 												let reqData = {
 													"data" : soap_first+soap_mid+soal_last
 												}
-												console.log(reqData)
-												axios.post("http://52.66.44.56:3000/getPremium", reqData).then(
+												axios.post("http://192.168.253.175:3000/getPremium", reqData).then(
 														response => {
 																//let res = JSON.parse(response);
 																if(response.data.totPremium==undefined){
