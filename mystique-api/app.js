@@ -24,16 +24,16 @@ app.get("/",(req, res) => {
 app.post("/getPremium",(req, res) => {
     let data = req.body;
     request.post({
-      url:     'http://124.30.32.37:9082/TEBT_QuoteGenerationWeb/sca/QuoteGeneration_ThirdPartyExport',
+      url:     'http://202.191.179.105:80/TEBT_QuoteGenerationWeb/sca/QuoteGeneration_ThirdPartyExport',
       body: data.data,
       headers: {'Content-Type': 'text/xml'}
     }, function(error, response, body){
       if(error){
-        throw err
+        throw error
       }
       parseString(body, function (error, result) {
         if(error){
-          throw err
+          throw error
         }
         if(result["soapenv:Envelope"]["soapenv:Body"][0]["out2:generatequoteResponse"][0]["generatequoteRes"][0]["body"]==undefined){
           res.send("error")
